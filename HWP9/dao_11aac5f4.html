@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>DAO Information</title>
+        <meta charset="utf-8">
+        <script src="web3.min.js"></script>
+        <style>body{font:15px/1.4 Helvetica,arial,freesans,clean,sans-serif}h2{font-size:2em;border-bottom:1px solid rgb(238, 238, 238)}code{background-color:rgb(248, 248, 248);border:1px solid rgb(221, 221, 221);font-size:13px;padding:0 5px;border-radius:3px}pre{background-color:rgb(248, 248, 248);border:1px solid rgb(221, 221, 221);padding:6px 10px;overflow:auto}pre code{border:none;padding:0}img{max-width:100%}blockquote{background:#f9f9f9;border-left:5px solid #cccccc;margin:1em 10px;padding:0.25em 10px}table{border-collapse:collapse;border-spacing:0;word-break:keep-all}table tr{background-color:#FFF;border-top:1px solid #CCC}table th{padding:6px 13px;border:1px solid #d9dcdf;background-color:	#f7ab40}table td{padding:6px 13px;border:1px solid #d9dcdf}table tr:nth-child(2n){background-color:#f8f8f8}td.wrap{word-break:break-all}.mono{word-break:break-all;font-size:small;font-family:monospace;white-space:nowrap}.monoreg{word-break:break-all;font-size:smaller;font-family:monospace;white-space:nowrap}body{margin-top:75px}.topnav{overflow:hidden;background-color:#ebecee}.topnav a{float:left;display:block;color:black;text-align:center;padding:10px 16px;text-decoration:none;font-size:17px;border-radius:10px;font-size:revert}div.topnav{margin-top:60px}table.topnav{width:100%;position:fixed;top:0;left:0;right:0;overflow:hidden;height:53px}tr.topnav td h1{border-bottom:0}tr.topnav,tr.topnav td{padding-top:0;padding-bottom:0;border:none;border-bottom:1px solid #d9dcdf}.topnav h1{margin-top:0;margin-bottom:0}.topnav a:hover{background-color:#d9dcdf;color:black}.topnav a.active{padding:0 10px}.topnav a.active2{background-color:#d9dcdf;margin:2px;padding-top:1px;padding-bottom:1px}.topnav a.active3{background-color:#d9dcdf;margin-left:2px;margin-right:2px;padding-top:13px;padding-bottom:13px}h1.title{margin-top:4px;margin-bottom:-4px}.topnav input[type=text]{float:right;padding:6px;border:none;margin-top:8px;margin-right:16px;font-size:17px;border-radius:10px}@media screen and (max-width: 600px){.topnav a,.topnav input[type=text]{float:none;display:block;text-align:left;width:100%;margin:0;padding:14px}.topnav input[type=text]{border:1px solid #ccc}}table.nav{width:100%}table.nav tr{border:none}table.nav td{border:none}form.link input[type="submit"]{background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;padding:0}.copylink{height:13px;width:13px;display:inline-block;margin-right:5px;vertical-align:middle;background-repeat:no-repeat;cursor:pointer}.navarrow{font-size:x-large;vertical-align:middle}table.transparent tr,table.transparent tr td{border:none;background-color:white}table.list{overflow:auto;height:100px}table.list thead th{position:sticky;z-index:1;top:53px}table.center td,table.list td{text-align:center}@keyframes fadeout{from{background-color:#d9dcdf}to{background-color:white}}span.price{padding:7px 7px 2px;background-color:white;border-radius:3px}.fadeout{animation:2s fadeout}img.cclogo{max-width:32px;max-height:32px;border:1px solid black;border-radius:18px}table.dlist tr td{background-color:white}.wide{display:inline}.narrow{display:none;word-break:break-all}@media (max-width:1000px){.wide{display:none}.narrow{display:inline}div.topnavm{display:block}div.topnav,table.topnav{display:none}table.list thead th{top:49px}}td.break{word-break:break-all}input.search{margin-bottom:8px;width:200px}table.list,table.single{margin-bottom:20px}.mobile-container{padding-left:0;padding-right:0;margin:auto;background-color:#555;height:0;border-radius:10px;margin-left:10px;margin-right:10px}.topnavm{overflow:hidden;background-color:#333;position:relative;display:none;position:fixed;left:0;top:0;width:100%}.topnavm #myLinks{display:none}.topnavm a{color:white;padding:14px 16px;text-decoration:none;font-size:17px;display:block}.topnavm a.title{font-size:large;color:#333;padding-top:10px;padding-bottom:10px}.topnavm a.icon{background:black;display:block;position:absolute;right:0;top:0;font-size:xx-large;padding-top:3px}.topnavm a:hover{background-color:#d9dcdf;color:black}.activem{background-color:#e9e9e9;color:white}input.searchm{margin-bottom:8px;width:200px;font-size:large;margin-left:16px}div.topnavm{z-index:2}span.header_icon{height:20px;width:20px;display:inline-block;margin-right:5px;vertical-align:middle;background-repeat:no-repeat}span.title_icon{height:1em;width:1em;display:inline-block;margin-right:5px;background-repeat:no-repeat}a.header_link{background-color:#d9dcdf;margin:2px;padding:10px}.invert{filter: invert(100%)}code a{color:black;text-decoration:none}span.mono a{color:black;text-decoration:none}table.center tr td{text-align:center}</style>
+
+    </head>
+    <body style="margin-top:0">
+        <h2>DAO Information</h2>
+        <p>DAO's purpose is: <span id="dao_purpose">loading...</span></p>
+        <p>Here's how to join: <span id="dao_join">loading...</span></p>
+        <p>Total proposals: <span id="total_proposals">loading...</span></p>
+        <table id="proposal_list" class="dlist center"></table>
+        <script>
+            //most of these functions were taken and modified from https://andromeda.cs.virginia.edu/explorer/auctions.php
+
+            let web3 = new Web3('wss://andromeda.cs.virginia.edu/geth');
+
+            let daoABI = [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"proposalID","type":"uint256"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":true,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"string","name":"description","type":"string"}],"name":"NewProposal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"proposalID","type":"uint256"},{"indexed":true,"internalType":"bool","name":"result","type":"bool"}],"name":"ProposalClosed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"proposalID","type":"uint256"},{"indexed":true,"internalType":"bool","name":"position","type":"bool"},{"indexed":true,"internalType":"address","name":"voter","type":"address"}],"name":"Voted","type":"event"},{"inputs":[{"internalType":"address","name":"who","type":"address"}],"name":"addMember","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposalID","type":"uint256"}],"name":"closeProposal","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"curator","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"howToJoin","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"who","type":"address"}],"name":"isMember","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minProposalDebatePeriod","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"string","name":"description","type":"string"},{"internalType":"uint256","name":"debatingPeriod","type":"uint256"}],"name":"newProposal","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"numberOfProposals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"i","type":"uint256"}],"name":"proposals","outputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"bool","name":"","type":"bool"},{"internalType":"bool","name":"","type":"bool"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"purpose","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestMembership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"reservedEther","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokens","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposalID","type":"uint256"},{"internalType":"bool","name":"supportsProposal","type":"bool"}],"name":"vote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"a","type":"address"},{"internalType":"uint256","name":"pid","type":"uint256"}],"name":"votedNo","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"a","type":"address"},{"internalType":"uint256","name":"pid","type":"uint256"}],"name":"votedYes","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}];
+            var deployedDAO = web3.utils.toChecksumAddress('0x551c4834313457Eff903172aC08C3AAb09Dc3e4D');
+            daoContract = new web3.eth.Contract(daoABI, deployedDAO);
+
+            const getPurpose = async() => {
+                return await daoContract.methods.purpose().call();
+            }
+
+            const getHowToJoin = async() => {
+                return await daoContract.methods.howToJoin().call();
+            }
+
+            const getNumProposals = async() => {
+                return await daoContract.methods.numberOfProposals().call();
+            }
+
+            const getProposalInfo = async(i) => {
+                return await daoContract.methods.proposals(i).call();
+            }
+
+            function short_hash(hash) {
+                hash = "" + hash
+                if ( hash == "" )
+                    return "";
+                else if ( hash.length < 10 )
+                    return hash
+                else
+                    return hash.substr(0,5) + "..." + hash.substr(-3);
+            }
+
+            function getHMSstring(t) {
+                if ( t == 0 )
+                    return "0 seconds";
+                var tstr = "";
+                var h = Math.floor(t/3600);
+                if ( h > 0 )
+                    tstr += h + " hour";
+                if ( h > 1 )
+                    tstr += "s";
+                t = t % 3600;
+                var m = Math.floor(t/60);
+                if ( m > 0 ) {
+                    if ( tstr != "" )
+                        tstr += ", ";
+                    if ( m > 0 )
+                        tstr += m + " minute";
+                    if ( m > 1 )
+                        tstr += "s";
+                }
+                t = t % 60;
+                s = t;
+                if ( s > 0 ) {
+                    if ( tstr != "" )
+                        tstr += ", ";
+                    if ( s > 0 )
+                        tstr += s + " second";
+                    if ( s > 1 )
+                        tstr += "s";
+                }
+                return tstr;
+            }
+
+            function numberWithCommas(x) {
+                // from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            // this function is from https://stackoverflow.com/questions/24170933/convert-unix-timestamp-to-date-time-javascript
+            function convertTimestamp(timestamp) {
+                var d = new Date(timestamp * 1000), // Convert the passed timestamp to milliseconds
+                    yyyy = d.getFullYear(),
+                    mm = ('0' + (d.getMonth() + 1)).slice(-2),  // Months are zero based. Add leading 0.
+                    dd = ('0' + d.getDate()).slice(-2),         // Add leading 0.
+                    hh = d.getHours(),
+                    h = hh,
+                    min = ('0' + d.getMinutes()).slice(-2),     // Add leading 0.
+                    ampm = 'AM',
+                    time;
+
+                if (hh > 12) {
+                    h = hh - 12;
+                    ampm = 'PM';
+                } else if (hh === 12) {
+                    h = 12;
+                    ampm = 'PM';
+                } else if (hh == 0) {
+                    h = 12;
+                }
+
+                // ie: 2014-03-24, 3:00 PM
+                time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
+                return time;
+            }
+
+            function handleSubscription() {
+                var options = { address: deployedDAO };
+                var sub = web3.eth.subscribe('logs', options, function(err,event) {
+                    if ( !err )
+                        console.log("event error: "+event);
+                });
+
+                sub.on('data', event => { console.log(event); updateTable(); })
+                sub.on('error', err => { throw err })
+            }
+
+            function updateProposalTableRowHTML(a, index) {
+                text = "";
+                text += "<td>" + index + "</td>";
+
+                for ( var i = 0; i < Object.keys(a).length; i++ ) {
+                    text += "<td>";
+                    //handle wei amount
+                    if(i == 1) {
+                        text += a[i]/(10**18) + " eth";
+                    }
+                    //shortening addresses for space
+                    else if (i == 0 || i == 8){
+                        text += short_hash(a[i]);
+                    }
+                    //handle time
+                    else if(i == 3) {
+                        if ( parseInt(a[i]) < 7*24*60*60 ) {
+                            if ( parseInt(a[i]) == 0 )
+                                text += "Voting has ended";
+                            else
+                                text += "Ends " + getHMSstring(parseInt(a[i])) + "<br>after first bid";
+                        } else if ( Date.now()/1000 > parseInt(a[i]) )
+                            text += "Voting has ended";
+                        else if ( parseInt(a[i]) < 1000000000 )
+                            text += (a[i]/(24*60*60)).toFixed(2) + " days (" + numberWithCommas(a[i]) + " seconds) once started";
+                        else {
+                            text += convertTimestamp(a[i]);
+                            var timeleftd = -(Date.now()/1000 - a[i])/(24*60*60);
+                            var timelefth = -(Date.now()/1000 - a[i])/(60*60);
+                            var timeleftm = -(Date.now()/1000 - a[i])/(60);
+                            if ( timeleftd >= 1 )
+                                text += "<br>(" + timeleftd.toFixed(1) + " days)";
+                            else if ( timelefth >= 1 )
+                                text += "<br>(" + timelefth.toFixed(1) + " hours)";
+                            else
+                                text += "<br>(" + numberWithCommas(timeleftm.toFixed(1)) + " minutes)";
+                        }
+                    }
+                    else {
+                        text += a[i];
+                    }
+                    text += "</td>";
+                }
+                document.getElementById("proposal_"+index).innerHTML = text;
+            }
+
+            const updateProposalTableRow = async(i) => {
+                getProposalInfo(i).then(l => { updateProposalTableRowHTML(l, i); });
+            }
+
+            function updateTable() {
+                getNumProposals().then(val => {
+                    document.getElementById("total_proposals").innerHTML = val;
+                    if (val == 0) {
+                        document.getElementById("proposal_list").innerHTML = "<span class='center'> There are no proposals yet! </span>";
+                    }
+                    else {
+                        // Proposal struct fields (in order): 0:recipient, 1:amount, 2:description, 3:votingDeadline, 4:open, 5:proposalPassed, 6:yeah, 7:nay, 8:creator
+                        text = "<thead><tr><th>ID</th><th>Recipient</th><th>Amount(ETH)</th><th>Description</th><th>Voting Deadline</th><th>Open?</th><th>Passed?</th><th>Yes Votes</th><th>No Votes</th><th>Creator</th></tr></thead>";
+                        for ( var i = 0; i < val; i++ )
+                            text += "<tr id='proposal_" + i + "'><td colspan='10'>loading...</td></tr>";
+                        // write the table to the HTML page; this must happen BEFORE we start filling in the rows
+                        document.getElementById("proposal_list").innerHTML = text;
+                        // call the async function that will fill the table
+                        for ( var i = 0; i < val; i++ )
+                            updateProposalTableRow(i);
+                    }
+                });
+            }
+
+            function loadScreen() {
+                getPurpose().then(purpose =>{
+                    document.getElementById("dao_purpose").innerHTML = purpose;
+                });
+
+                getHowToJoin().then(join => {
+                    document.getElementById("dao_join").innerHTML = join;
+                });
+
+                updateTable();
+            }
+
+            loadScreen();
+            handleSubscription();
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,451 @@
+<!-- mvy3ns Thomas Reiter -->
+<!-- HWP11 for CS 4501: Cryptocurrency -->
+
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Auctions Contract Interaction</title>
+	    <meta charset="utf-8">
+	    <script src="web3.min.js"></script>
+    <style>body{font:15px/1.4 Helvetica,arial,freesans,clean,sans-serif}h1{font-size:2.5em;border-bottom:1px solid rgb(221, 221, 221)}h2{font-size:2em;border-bottom:1px solid rgb(238, 238, 238)}code{background-color:rgb(248, 248, 248);border:1px solid rgb(221, 221, 221);font-size:13px;padding:0 5px;border-radius:3px}pre{background-color:rgb(248, 248, 248);border:1px solid rgb(221, 221, 221);padding:6px 10px;overflow:auto}pre code{border:none;padding:0}img{max-width:100%}blockquote{background:#f9f9f9;border-left:5px solid #cccccc;margin:1em 10px;padding:0.25em 10px}table{border-collapse:collapse;border-spacing:0;word-break:keep-all}table tr{background-color:#FFF;border-top:1px solid #CCC}table th{padding:6px 13px;border:1px solid #d9dcdf;background-color:#cccccc}table td{padding:6px 13px;border:1px solid #d9dcdf}table tr:nth-child(2n){background-color:#f8f8f8}td.wrap{word-break:break-all}.mono{word-break:break-all;font-size:small;font-family:monospace;white-space:nowrap}.monoreg{word-break:break-all;font-size:smaller;font-family:monospace;white-space:nowrap}body{margin-top:75px}.topnav{overflow:hidden;background-color:#ebecee}.topnav a{float:left;display:block;color:black;text-align:center;padding:10px 16px;text-decoration:none;font-size:17px;border-radius:10px;font-size:revert}div.topnav{margin-top:60px}table.topnav{width:100%;position:fixed;top:0;left:0;right:0;overflow:hidden;height:53px}tr.topnav td h1{border-bottom:0}tr.topnav,tr.topnav td{padding-top:0;padding-bottom:0;border:none;border-bottom:1px solid #d9dcdf}.topnav h1{margin-top:0;margin-bottom:0}.topnav a:hover{background-color:#d9dcdf;color:black}.topnav a.active{padding:0 10px}.topnav a.active2{background-color:#d9dcdf;margin:2px;padding-top:1px;padding-bottom:1px}.topnav a.active3{background-color:#d9dcdf;margin-left:2px;margin-right:2px;padding-top:13px;padding-bottom:13px}h1.title{margin-top:4px;margin-bottom:-4px}.topnav input[type=text]{float:right;padding:6px;border:none;margin-top:8px;margin-right:16px;font-size:17px;border-radius:10px}@media screen and (max-width: 600px){.topnav a,.topnav input[type=text]{float:none;display:block;text-align:left;width:100%;margin:0;padding:14px}.topnav input[type=text]{border:1px solid #ccc}}table.nav{width:100%}table.nav tr{border:none}table.nav td{border:none}form.link input[type="submit"]{background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;padding:0}.copylink{height:13px;width:13px;display:inline-block;margin-right:5px;vertical-align:middle;background-repeat:no-repeat;cursor:pointer}.navarrow{font-size:x-large;vertical-align:middle}table.transparent tr,table.transparent tr td{border:none;background-color:white}table.list{overflow:auto;height:100px}table.list thead th{position:sticky;z-index:1;top:53px}table.center td,table.list td{text-align:center}@keyframes fadeout{from{background-color:#d9dcdf}to{background-color:white}}span.price{padding:7px 7px 2px;background-color:white;border-radius:3px}.fadeout{animation:2s fadeout}img.cclogo{max-width:32px;max-height:32px;border:1px solid black;border-radius:18px}table.dlist tr td{background-color:white}.wide{display:inline}.narrow{display:none;word-break:break-all}@media (max-width:1000px){.wide{display:none}.narrow{display:inline}div.topnavm{display:block}div.topnav,table.topnav{display:none}table.list thead th{top:49px}}td.break{word-break:break-all}input.search{margin-bottom:8px;width:200px}table.list,table.single{margin-bottom:20px}.mobile-container{padding-left:0;padding-right:0;margin:auto;background-color:#555;height:0;border-radius:10px;margin-left:10px;margin-right:10px}.topnavm{overflow:hidden;background-color:#333;position:relative;display:none;position:fixed;left:0;top:0;width:100%}.topnavm #myLinks{display:none}.topnavm a{color:white;padding:14px 16px;text-decoration:none;font-size:17px;display:block}.topnavm a.title{font-size:large;color:#333;padding-top:10px;padding-bottom:10px}.topnavm a.icon{background:black;display:block;position:absolute;right:0;top:0;font-size:xx-large;padding-top:3px}.topnavm a:hover{background-color:#d9dcdf;color:black}.activem{background-color:#e9e9e9;color:white}input.searchm{margin-bottom:8px;width:200px;font-size:large;margin-left:16px}div.topnavm{z-index:2}span.header_icon{height:20px;width:20px;display:inline-block;margin-right:5px;vertical-align:middle;background-repeat:no-repeat}span.title_icon{height:1em;width:1em;display:inline-block;margin-right:5px;background-repeat:no-repeat}a.header_link{background-color:#d9dcdf;margin:2px;padding:10px}.invert{filter: invert(100%)}code a{color:black;text-decoration:none}span.mono a{color:black;text-decoration:none}table.center tr td{text-align:center}</style>
+    </head>
+	<body style="margin-top:0">
+		<h2>Auctioneer Status</h2>
+		<p>Please see the <a href='http://aaronbloomfield.github.io/ccc/hws/auction/'>Decentralized Auctions Assignment</a> for details how to use this.  In particular, this can ONLY be used on a contract that implements the <a href='http://aaronbloomfield.github.io/ccc/hws/auction/IAuctioneer.sol.html'>IAuctioneer</a> (<a href='http://aaronbloomfield.github.io/ccc/hws/auction/IAuctioneer.sol'>src</a>) interface provided in that assignment.  Note that you have to be logged into Collab to view the NFT images.</p>
+		<p>Enter the contract address of the Auctioneer decentralized application:</p>
+		<form action="auctions.php">
+			<input type="text" placeholder="contract address..." name="addr">&nbsp;
+			<input type='submit' value="view auctions">
+		</form>
+		<hr>
+
+		<script>
+// The ABI that Remix provided; this is basically the interface for how to
+// interact with the smart contract. This ONLY will work with the standard
+// Auctions smart contract!  Note that this is actually a reduced ABI, and
+// only contains the read-only (aka 'view') methods.
+auctioneerAbi = [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"}],"name":"auctionCloseEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"}],"name":"auctionStartEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"}],"name":"higherBidEvent","type":"event"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"auctionTimeLeft","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"auctions","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"closeAuction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collectFees","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"deployer","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"nftmanager","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"numAuctions","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"placeBid","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"m","type":"uint256"},{"internalType":"uint256","name":"h","type":"uint256"},{"internalType":"uint256","name":"d","type":"uint256"},{"internalType":"string","name":"data","type":"string"},{"internalType":"uint256","name":"reserve","type":"uint256"},{"internalType":"uint256","name":"nftid","type":"uint256"}],"name":"startAuction","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalFees","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"uncollectedFees","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+
+// This is a reduced ABI for the NFT manager -- it only contains the info for
+// the `tokenURI` method call, which will get us the filename of the NFT.
+nftManagerAbi = [{'inputs': [{'internalType': 'address', 'name': 'to', 'type': 'address'}, {'internalType': 'uint256', 'name': 'tokenId', 'type': 'uint256'}], 'name': 'approve', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'address', 'name': '_to', 'type': 'address'}, {'internalType': 'string', 'name': '_uri', 'type': 'string'}], 'name': 'mintWithURI', 'outputs': [{'internalType': 'uint256', 'name': '', 'type': 'uint256'}], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '_uri', 'type': 'string'}], 'name': 'mintWithURI', 'outputs': [{'internalType': 'uint256', 'name': '', 'type': 'uint256'}], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'uint256', 'name': 'tokenId', 'type': 'uint256'}], 'name': 'tokenURI', 'outputs': [{'internalType': 'string', 'name': '', 'type': 'string'}], 'stateMutability': 'view', 'type': 'function'}];
+
+function abicopylink(abi) {
+	document.write("<span class='copylink' onclick=\"navigator.clipboard.writeText('" + JSON.stringify(abi).replace(/"/g, "\\'") + "')\">&#x2398</span>");
+}
+		</script>
+
+		<p>For the IAuctioneer smart contract at address <a href='index.php?account=0x8AD785c1518AF97EEe05B31e15f914438F6d1579' target='_blank'>0x8AD785c1518AF97EEe05B31e15f914438F6d1579</a> <span class="copylink" onclick="navigator.clipboard.writeText('0x8AD785c1518AF97EEe05B31e15f914438F6d1579')">&#x2398</span></p>
+
+		<p>Total number of auctions: <span id='numAuctions'></span></p>
+
+		<p>NFTManager address: <span id='nftmanager'></span></p>
+
+		<hr>
+
+		<h3> Create More Auctions Here!! </h3>
+
+		<button onClick='connectToMetaMask()'>Enable Ethereum</button>
+
+		<hr>
+
+		<h4>Mint NFT</h4>
+
+		<!-- Javascript for minting NFT (from website) -->
+		<script>
+const mintNFT = async() => {
+	try {
+	const eth_coinbase = web3mm.utils.toChecksumAddress(await web3mm.eth.getCoinbase());
+	var str = document.getElementById('nftstring').value;
+	const txninfo = await nftContractmm.methods.mintWithURI(str).send({from:eth_coinbase, gas:1000000, gasPrice:1000000000});
+	showReturnIntegerValue(web3mm,txninfo['transactionHash'],"NFT ID");
+	} catch (error) {
+	console.error("Error: "+error);
+	}
+}
+		</script>
+
+		<form onsubmit='return false;'>
+			<p>NFT URI / string: <input type='text' id='nftstring' style="width:200px">
+			<input type='button' value="Mint" onClick="mintNFT();"></p>
+		</form>
+
+		<hr>
+
+		<!-- Javascript for approval function -->
+		<script>
+const approveNFT = async() => {
+	try {
+	const eth_coinbase = web3mm.utils.toChecksumAddress(await web3mm.eth.getCoinbase());
+	var str_id = document.getElementById('nftapproveid').value;
+	const txninfo = await nftContractmm.methods.approve(auctioneerContractAddress, str_id).send({from:eth_coinbase, gas:1000000, gasPrice:1000000000});
+	alert("Successfully Approved!");
+	} catch (error) {
+	console.error("Error: "+error);
+	}
+}
+		</script>
+
+		<h3> Approve your NFT for transfer to Auctioneer Contract </h3>
+		<form onsubmit='return false;'>
+			<p>NFT ID: <input type='text' id='nftapproveid' style="width:200px">
+			<input type='button' value="Approve" onClick="approveNFT();"></p>
+		</form>
+
+		<hr>
+
+		<!-- Javascript for creating an auction! -->
+		<script>
+const startAuction = async() => {
+	try {
+		const eth_coinbase = web3mm.utils.toChecksumAddress(await web3mm.eth.getCoinbase());
+		var m = document.getElementById('auctionMinutes').value;
+		var h = document.getElementById('auctionHours').value;
+		var d = document.getElementById('auctionDays').value;
+		var nftID = document.getElementById('nftStartId').value;
+		var data = document.getElementById('auctionDescription').value;
+		var reserve = web3.utils.toWei(document.getElementById('auctionReserve').value, 'ether');
+		const txninfo = await auctionContractmm.methods.startAuction(m, h, d, data, reserve, nftID).send({from:eth_coinbase, gas:1000000, gasPrice:1000000000});
+		showReturnIntegerValue(web3mm,txninfo['transactionHash'],"Auction ID");
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
+		</script>
+
+		<h3> Start an Auction </h3>	
+		<form onsubmit='return false;'>
+			<p>	Auction Duration (min/hr/day): 
+				<input type='text' id='auctionMinutes' style="width:50px">
+				/
+				<input type='text' id='auctionHours' style="width:50px">
+				/
+				<input type='text' id='auctionDays' style="width:50px">
+			</p>
+			<p> NFT ID: <input type='text' id='nftStartId' style="width:200px"> </p>
+			<p> Description:  <input type='text' id='auctionDescription' style="width:200px"> </p>
+			<p> Reserve in ETH:  <input type='text' id='auctionReserve' style="width:100px"></p>
+			<input type='button' value="Start Auction" onClick="startAuction();">
+		</form>
+
+		<hr>
+
+		<script>
+const placeBid = async() => {
+	try{
+		const eth_coinbase = web3mm.utils.toChecksumAddress(await web3mm.eth.getCoinbase());
+		var auctionID = document.getElementById('bidID').value;
+		var bid = document.getElementById('bidAmount').value;
+		const txninfo = await auctionContractmm.methods.placeBid(auctionID).send({from:eth_coinbase, gas:1000000, gasPrice:1000000000, value: web3.utils.toWei(bid, "ether")});
+		alert("Bid Placed");
+	} catch (err) {
+		console.error("Error: " + err);
+	}
+}
+		</script>
+
+		<h3> Place a Bid </h3>
+		<form onsubmit='return false;'>
+			<p> Auction ID: 
+				<input type='text' id='bidID' style="width:50px">
+			</p>
+			<p> Amount in ETH: 
+				<input type='text' id='bidAmount' style="width:50px">
+			</p>
+			<input type='button' value="Place Bid" onClick="placeBid();">
+		</form>
+
+		<hr>
+
+		<script>
+const closeAuction = async() => {
+	try{
+		const eth_coinbase = web3mm.utils.toChecksumAddress(await web3mm.eth.getCoinbase());
+		var auctionID = document.getElementById('closeID').value;
+		const txninfo = await auctionContractmm.methods.closeAuction(auctionID).send({from:eth_coinbase, gas:1000000, gasPrice:1000000000});
+		alert("Auction " + auctionID + " Closed");
+	} catch (err) {
+		console.error("Error: " + err);
+	}
+}
+		</script>
+
+		<h3> Close Auction </h3>
+		<form onsubmit='return false;'>
+			<p> Auction ID: 
+				<input type='text' id='closeID' style="width:50px">
+			</p>
+			<input type='button' value="Close" onClick="closeAuction();">
+		</form>
+
+		<hr>
+
+		<p>The auctions are:</p>
+
+		<table id="auction_list" class='center'></table>
+
+		<script>
+
+// functions given in assigment writeup
+async function sleepms(time_ms) {
+  await new Promise(resolve => setTimeout(resolve, time_ms));
+}
+
+function showReturnIntegerValue(w3,txnhash,desc) {
+  w3.eth.getTransaction(txnhash).then(txn => {
+    if ( txn['blockNumber'] == null ) {
+      sleepms(1000);
+      showReturnIntegerValue(w3,txnhash,desc);
+    } else
+      w3.eth.call({to:txn['to'],from:txn['from'],data:txn['input'],gas:txn['gas']},txn['blockNumber']-1).then(retval => {
+      var num = BigInt(retval).toString();
+      console.log(num)
+      alert(desc+": "+num);
+    });
+  });
+}
+
+// initial check to ensure executer has metamask installed
+if ( window.ethereum === undefined )
+    window.alert("Please install MetaMask; this page will not work properly without that extension installed");
+
+// function that a button click calls to connect user to metamask
+function connectToMetaMask() {
+    ethereum.request({ method: 'eth_requestAccounts' });
+}
+
+// We connect to the local web socket port that a geth node instance is
+// listening on.  This ONLY works because the web server on andromeda is
+// configured to re-route calls to /web3 to the geth HTTP-RPC port.
+let web3 = new Web3('wss://andromeda.cs.virginia.edu/geth');
+let web3mm = new Web3(window.ethereum);
+
+// This is the contract address specified via the URL
+var auctioneerContractAddress = web3.utils.toChecksumAddress('0x8AD785c1518AF97EEe05B31e15f914438F6d1579');
+
+// Create a contract object at the specified address for this code to interact with.
+auctionContract = new web3.eth.Contract(auctioneerAbi,auctioneerContractAddress);
+auctionContractmm = new web3mm.eth.Contract(auctioneerAbi,auctioneerContractAddress);
+
+
+// get the NFT contract
+var nftContract = null;
+const getNFTManager = async() => {
+	auctionContract.methods.nftmanager().call().then( a => { nftContract = new web3.eth.Contract(nftManagerAbi,a); 
+															 nftContractmm = new web3mm.eth.Contract(nftManagerAbi, a);
+															 updateTable(); 
+															 document.getElementById("nftmanager").innerHTML = "<a href='index.php?account=" + a + "' target='_blank'>" + a + "</a> <span class='copylink' onclick='navigator.clipboard.writeText(\""+a+"\")'>&#x2398</span>";
+															} );
+}
+//nftContractAddr = getNFTManagerAddr();
+//nftContract = new web3.eth.Contract(nftManagerAbi,nftContractAddr);
+getNFTManager();
+
+// An async function to get the number of auctions from the smart contract
+const getNumAuctions = async() => {
+	return await auctionContract.methods.numAuctions().call();
+}
+
+// An async function to get the auction info -- number of votes and the auction
+// name -- from the smart contract.
+const getAuctionInfo = async(i) => {
+	return await auctionContract.methods.auctions(i).call();
+}
+
+// this function is from https://stackoverflow.com/questions/24170933/convert-unix-timestamp-to-date-time-javascript
+function convertTimestamp(timestamp) {
+    var d = new Date(timestamp * 1000), // Convert the passed timestamp to milliseconds
+        yyyy = d.getFullYear(),
+        mm = ('0' + (d.getMonth() + 1)).slice(-2),  // Months are zero based. Add leading 0.
+        dd = ('0' + d.getDate()).slice(-2),         // Add leading 0.
+        hh = d.getHours(),
+        h = hh,
+        min = ('0' + d.getMinutes()).slice(-2),     // Add leading 0.
+        ampm = 'AM',
+        time;
+
+    if (hh > 12) {
+        h = hh - 12;
+        ampm = 'PM';
+    } else if (hh === 12) {
+        h = 12;
+        ampm = 'PM';
+    } else if (hh == 0) {
+        h = 12;
+    }
+
+    // ie: 2014-03-24, 3:00 PM
+    time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
+    return time;
+}
+
+function copy_link(data) {
+	if ( data != "" )
+		//return "&nbsp;<i class='copylink' onclick='navigator.clipboard.writeText(\"$data\")'> </i>";
+		return "&nbsp;<span class='copylink' onclick='navigator.clipboard.writeText(\"" + data + "\")'>&#x2398</span>";
+}
+
+function short_hash(hash) {
+	hash = "" + hash
+	if ( hash == "" )
+		return "";
+	else if ( hash.length < 10 )
+		return hash
+	else
+		return hash.substr(0,5) + "..." + hash.substr(-3);
+}
+
+// An async function to get the number of auctions from the smart contract
+const getNFTdata = async(row,id) => {
+	d = await nftContract.methods.tokenURI(id).call();
+	return [row,d];
+}
+
+function numberWithCommas(x) {
+    // from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+function getHMSstring(t) {
+	if ( t == 0 )
+		return "0 seconds";
+	var tstr = "";
+	var h = Math.floor(t/3600);
+	if ( h > 0 )
+		tstr += h + " hour";
+	if ( h > 1 )
+		tstr += "s";
+	t = t % 3600;
+	var m = Math.floor(t/60);
+	if ( m > 0 ) {
+		if ( tstr != "" )
+			tstr += ", ";
+		if ( m > 0 )
+			tstr += m + " minute";
+		if ( m > 1 )
+			tstr += "s";
+	}
+	t = t % 60;
+	s = t;
+	if ( s > 0 ) {
+		if ( tstr != "" )
+			tstr += ", ";
+		if ( s > 0 )
+			tstr += s + " second";
+		if ( s > 1 )
+			tstr += "s";
+	}
+	return tstr;
+}
+
+// when passed the array of data values, it will update the table row; this
+// does NOT get the data from the auction contract (that's already obtained
+// in the 'a' parameter), but it DOES get the data from the NFT manager
+// contract
+//
+// Auction struct fields (in order): 0:id, 1:num_bids, 2:data, 3:highestBid, 4:winner, 5:initiator, 6:tokenId, 7:endTime, 8:active
+
+function updateAuctionTableRowHTML(a) {
+	text = "";
+	for ( var i = 0; i < Object.keys(a).length; i++ ) {
+		if ( i == 8 ) // formatting for auction end time only
+			text += "<td style='word-wrap:break-word;max-width:100px'>";
+		else
+			text += "<td>";
+		if ( (i >= 4) && (i <= 6) ) // 4:winner, 5:initiator, 6:id
+			text += short_hash(a[i]) + "&nbsp;" + copy_link(a[i]);
+		else if ( i == 3 ) { // highest bid
+			if ( parseInt(a[i]) == 0 )
+				text += "0";
+			else if ( parseInt(a[i]) < 1e7 )
+				text += numberWithCommas(parseInt(a[i])) + " wei";
+			else if ( parseInt(a[i]) < 1e15 )
+				text += numberWithCommas(parseInt(a[i])/1e9) + " gwei";
+			else
+				text += numberWithCommas(parseInt(a[i])/1e18) + " eth";
+		} else if ( i == 7 ) { // end time
+			if ( parseInt(a[i]) < 7*24*60*60 ) { // 1 week
+				if ( parseInt(a[i]) == 0 )
+					text += "Auction has ended";
+				else
+					text += "Ends " + getHMSstring(parseInt(a[i])) + "<br>after first bid";
+			} else if ( Date.now()/1000 > parseInt(a[i]) )
+				text += "Auction has ended";
+			else if ( parseInt(a[i]) < 1000000000 )
+				text += (a[i]/(24*60*60)).toFixed(2) + " days (" + numberWithCommas(a[i]) + " seconds) once started";
+			else {
+				text += convertTimestamp(a[i]);
+				var timeleftd = -(Date.now()/1000 - a[i])/(24*60*60);
+				var timelefth = -(Date.now()/1000 - a[i])/(60*60);
+				var timeleftm = -(Date.now()/1000 - a[i])/(60);
+				if ( timeleftd >= 1 )
+					text += "<br>(" + timeleftd.toFixed(1) + " days)";
+				else if ( timelefth >= 1 )
+					text += "<br>(" + timelefth.toFixed(1) + " hours)";
+				else
+					text += "<br>(" + numberWithCommas(timeleftm.toFixed(1)) + " minutes)";
+			}
+		} else // 0:id, 1:num_bids, 2:data, 3:highestBid, 
+			text += a[i];
+		text += "</td>";
+	}
+	text += "<td id='nft_"+a[0]+"'>...</td>";
+	document.getElementById("auction_"+a[0]).innerHTML = text;
+	// get the NFT info now that the table has been updated
+	if ( a[7] != "0x0000000000000000000000000000000000000000" ) {
+		getNFTdata(a[0],a[6]).then(l => {
+			if ( document.getElementById("nft_" + l[0]) != null )
+				document.getElementById("nft_" + l[0]).innerHTML = "<a target='_blank' href='" + l[1].replace(/[^\x20-\x7E]/g, "") + "'><img style='max-width:80px;max-height:100px' src='" + l[1].replace(/[^\x20-\x7E]/g, "") + "'></a>";
+		});
+	}
+}
+
+
+// Given the table row number, it will request the data from the contract and
+// write an updated table row
+const updateAuctionTableRow = async(i) => {
+	getAuctionInfo(i).then(l => { updateAuctionTableRowHTML(l); });
+}
+
+function handleSubscription() {
+	// subscribe to updates on this contract
+	var options = { address: web3.utils.toChecksumAddress('0x8AD785c1518AF97EEe05B31e15f914438F6d1579') };
+	var sub = web3.eth.subscribe('logs', options, function(err,event) {
+		if ( !err )
+			console.log("event error: "+event);
+	});
+	// pay attention to these subscription events:
+	sub.on('data', event => { console.log(event); updateTable(); })
+	sub.on('error', err => { throw err })
+}
+
+// writes the rows for the entire table -- this has to be called when the
+// script loads, and whenever a new auction is created
+function updateTable() {
+	// The "main" part of this script -- once we know how many auctions there are.
+	getNumAuctions().then(val => {
+		// set that value in the "Total number of auctions:"  paragraph
+		document.getElementById("numAuctions").innerHTML = val;
+		// create the table body to list the votes and auctions
+		// Auction struct fields (in order): 0:id, 1:num_bids, 2:data, 3:highestBid, 4:winner, 5:initiator, 6:tokenId, 7:endTime, 8:active
+		text = "<tr><th>Auction<br>ID</th><th>Number<br>of bids</th><th>Data string</th><th>Reserve or<br>highest bid so far</th><th>Highest<br>bidder</th><th>Initiator</th><th>NFT token ID</th><th>Auction end time</th><th>Active?</th><th>NFT link / image</th></tr>";
+		// for each of the auctions, create a separate table row with unique IDs
+		for ( var i = 0; i < val; i++ )
+			text += "<tr id='auction_" + i + "'><td colspan='10'>loading...</td></tr>";
+		// write the table to the HTML page; this must happen BEFORE we start filling in the votes and auctions
+		document.getElementById("auction_list").innerHTML = text;
+		// call the async function that will fill in the number of votes and auctions into the table
+		for ( var i = 0; i < val; i++ )
+			updateAuctionTableRow(i);
+	});
+}
+
+updateTable();
+handleSubscription();
+
+		</script>
+
+		<p>IAuctioneer ABI: <script>abicopylink(auctioneerAbi);</script>; NFT manager reduced ABI: <script>abicopylink(nftManagerAbi);</script></p>
+	</body>
+</html>
