@@ -1,0 +1,469 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "auctionCloseEvent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "auctionStartEvent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "higherBidEvent",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "auctionTimeLeft",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "auctions",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "num_bids",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "data",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "highestBid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "winner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "initiator",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nftid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "endTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "active",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "closeAuction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "collectFees",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "deployer",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "nftmanager",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numAuctions",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "placeBid",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "m",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "h",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "d",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "data",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reserve",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nftid",
+						"type": "uint256"
+					}
+				],
+				"name": "startAuction",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalFees",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "uncollectedFees",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"supportsInterface(bytes4)": {
+					"details": "Returns true if this contract implements the interface defined by `interfaceId`. See the corresponding https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section] to learn more about how these ids are created. This function call must use less than 30 000 gas."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"dAppFiles/Auctioneer.sol": "Auctioneer"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"dAppFiles/Auctioneer.sol": {
+			"keccak256": "0xb3ae9441c1874e22a81534edfb1387453f3a5c0f1179acd9b34e4db79194c3ea",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://dceb535d2cd2b147ed9408d105370a4269cdef8ab729d25bc950bd4e8238cb90",
+				"dweb:/ipfs/QmV2F26sjYQwiAbbYYwibMiDK5vhp7Eo3orLV2GXfRg97Z"
+			]
+		},
+		"dAppFiles/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
+		"dAppFiles/ERC165.sol": {
+			"keccak256": "0x6fac27fb1885a1d9fd2ce3f8fac4e44a6596ca4d44207c9ef2541ba8c941291e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2079378abdb36baec15c23bc2353b73a3d28d1d0610b436b0c1c4e6fa61d65c9",
+				"dweb:/ipfs/QmVZkRFMzKW7sLaugKSTbMNnUBKWF3QDsoMi5uoQFyVMjf"
+			]
+		},
+		"dAppFiles/ERC721.sol": {
+			"keccak256": "0x7c484248608048635cf6be8365497ab3b71d3be5d70bcf704e66464e3cd07721",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a77ba9ac3c5b9fe3c11d668b1d3d3577cc9589399aebe19e6f97e73f3e117b4d",
+				"dweb:/ipfs/QmVAySiJznnWrxqqTfczFAxaVaTpQmyjYSjRUZxen55DFp"
+			]
+		},
+		"dAppFiles/ERC721Utils.sol": {
+			"keccak256": "0x793034c290116b20c2056f803730ee7eb2b7e31268774de61e99390a2c1a0789",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3afea82004c92166e4f65d9539d1ef62b4cab7faee78ada26084682ab8f620f7",
+				"dweb:/ipfs/QmR2CeHPAzwFWmxp9jGm1DfLGaKRG87XRAyNC5t27WgY71"
+			]
+		},
+		"dAppFiles/IAuctioneer.sol": {
+			"keccak256": "0x326e6dc0e064475d7b648c0cbbb64e476f547fb74444d629d6ab2768a97617a8",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://2a9fc87cbc950c1a1eba7b6998076a991613e4bccd15e552ba7ef21ad5b9fb55",
+				"dweb:/ipfs/QmTHoizDwbiZoD8e2eWRSRA4mbSsjeK2XSJwoY2YGrQTeW"
+			]
+		},
+		"dAppFiles/IERC165.sol": {
+			"keccak256": "0xc859863e3bda7ec3cddf6dafe2ffe91bcbe648d1395b856b839c32ee9617c44c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a9d5417888b873cf2225ed5d50b2a67be97c1504134a2a580512168d587ad82e",
+				"dweb:/ipfs/QmNr5fTb2heFW658NZn7dDnofZgFvQTnNxKRJ3wdnR1skX"
+			]
+		},
+		"dAppFiles/IERC721.sol": {
+			"keccak256": "0xf4dcd9a2bba3d5615d11e51dafc67a4a2858bd47f9e6a669ee9869322180caf9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fdfa49238f256513a3aff16514898c69a937073afd04e47900a2b31e07c0e037",
+				"dweb:/ipfs/QmUeJPMErUNgjyUMrxLR21K39vBhGQs8AzobmhoF3DuwNK"
+			]
+		},
+		"dAppFiles/IERC721Metadata.sol": {
+			"keccak256": "0xee27b4bef77fb16f2a3e051fd049f28287ba5e516e2a272883b011ceca75eafe",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e30caa9722a34e6293472598b6fb4aa458221929504d8e47ce050339234706a0",
+				"dweb:/ipfs/QmXZiGbDXpxPQDEwR84rVBrGtgUfwox6oMXK2HUmZnLMyE"
+			]
+		},
+		"dAppFiles/IERC721Receiver.sol": {
+			"keccak256": "0xcac5b2622b9876529ca71f56b08a2786e960f0a738a9fcc456b2b8740170f89b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://36ec9bacdaa2003a4b68d078f55887e7ec763e83d2027aaa1478578ae71c9b66",
+				"dweb:/ipfs/QmbXfAcgockJRxMxKe5mt1pQyeafwCJuUpxce6a2ehB8bt"
+			]
+		},
+		"dAppFiles/INFTManager.sol": {
+			"keccak256": "0x6596b3b61db86ee72a92e457b29209ee65d554ab2306c5ca2d84f2a881bc0403",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://87581d156f137516de43884b925ad8eb77390f87d07779fd04e040a0558b0184",
+				"dweb:/ipfs/QmQXFDjzLU6NauZnY6RukkxJrzH662MtjGPQYKr7w1Z2Ek"
+			]
+		},
+		"dAppFiles/Math.sol": {
+			"keccak256": "0x3daf0a053572ca11470f3282cb38a84da028b11f343486072668a5cb090e824e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e1fa02be8239e1c7d2688d07b2f7e704ab6b8f0585c40d963896799676ca271b",
+				"dweb:/ipfs/QmPg4AGBn7itaWfAvMCyYKpZaKm8DaBuHeQ7abyJnDbuMj"
+			]
+		},
+		"dAppFiles/NFTManager.sol": {
+			"keccak256": "0x2743fb42fc531f6e1e9f6a23515e99f3a268c394cfa703f3b895d06571b7f37d",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://a47c48bbcfe6d2af346ab7229525a411a11af14c50194e615c9e4fb29a7d432c",
+				"dweb:/ipfs/QmXkrswYVz7EVT5schpgk7SfHd4BZuPvytySG26shqgWfi"
+			]
+		},
+		"dAppFiles/Panic.sol": {
+			"keccak256": "0x29074fe5a74bb024c57b3570abf6c74d8bceed3438694d470fd0166a3ecd196a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f4f8435ccbc56e384f4cc9ac9ff491cf30a82f2beac00e33ccc2cf8af3f77cc3",
+				"dweb:/ipfs/QmUKJXxTe6nn1qfgnX8xbnboNNAPUuEmJyGqMZCKNiFBgn"
+			]
+		},
+		"dAppFiles/SafeCast.sol": {
+			"keccak256": "0x8cd59334ed58b8884cd1f775afc9400db702e674e5d6a7a438c655b9de788d7e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://99e62c7de7318f413b6352e3f2704ca23e7725ff144e43c8bd574d12dbf29047",
+				"dweb:/ipfs/QmSEXG2rBx1VxU2uFTWdiChjDvA4osEY2mesjmoVeVhHko"
+			]
+		},
+		"dAppFiles/SignedMath.sol": {
+			"keccak256": "0x519e2c9d9c4dfd63311fb98663e55ba465772897cd4a98e3a5406a1f5959811f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c4718d121f448f8fce3b28a276fd194014597319a4133696793893ae13c6e512",
+				"dweb:/ipfs/QmaQyHiKokgyWq9nREub6xGUAEYiGTiv4caigjGCiWZTjZ"
+			]
+		},
+		"dAppFiles/Strings.sol": {
+			"keccak256": "0x46ce9d63654c57e19abeab605e98641c57d6342de59ad4fe7e8fa3aac0c6df1d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://236839d89732d40c481e13893a9b25c6b90624501b16d19dcf8072731740b2c5",
+				"dweb:/ipfs/QmYf175PBs3ogayca5DLieLLQbkzvxuLLXZUpySLcPdxfA"
+			]
+		},
+		"dAppFiles/draft-IERC6093.sol": {
+			"keccak256": "0x9cac1f97ecc92043dd19235d6677e40cf6bac382886a94f7a80a957846b24229",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a1e0c924e0edfdfd4abceeb552d99f1cd95c0d387b38ccb1f67c583607e3d155",
+				"dweb:/ipfs/QmZAi6qKa66zuS3jyEhsQR9bBNnZe1wSognYqw9nvseyUz"
+			]
+		}
+	},
+	"version": 1
+}

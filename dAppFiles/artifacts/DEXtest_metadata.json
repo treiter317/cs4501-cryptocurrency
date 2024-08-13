@@ -1,0 +1,225 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "dex",
+				"outputs": [
+					{
+						"internalType": "contract DEX",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "erc20",
+						"type": "address"
+					}
+				],
+				"name": "onERC20Received",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tc",
+				"outputs": [
+					{
+						"internalType": "contract TokenCC",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "test",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"onERC20Received(address,uint256,address)": {
+					"details": "Whenever an {IERC20} amount is transferred to this contract from `from`, this function is called. It must return true to confirm the token transfer. If false is returned the transfer will be reverted. The selector can be obtained in Solidity with `IERC20Receiver.onERC20Received.selector`."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"dAppFiles/DEXtest.sol": "DEXtest"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"dAppFiles/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
+		"dAppFiles/DEX.sol": {
+			"keccak256": "0x7dbc58f4b7f9ba766790493b40ab12e701a56d44c7e94d1d552ad48dbbf094ec",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://c92631c3e0e9c3effaf9abac0c45dac93dd42c01a79598e7ff07c9e450a4fb9f",
+				"dweb:/ipfs/QmWmxPtaqZhoFW1WUa9pmSkSRS8deE7MFt1hGcH7LKjqw3"
+			]
+		},
+		"dAppFiles/DEXtest.sol": {
+			"keccak256": "0xc2ea39aa7ac87becd2943d3206f6a102a00b8a42e872a88d0df80aaacfb1e163",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://c2d86268b8cd3808b9cf8bbbb4923ce53c5c02421033fb26b134832e8cd9b3ee",
+				"dweb:/ipfs/QmYUNdKd77oFu5M2YgW5NbZ6isngY6BxvALwzHaqMAKZP7"
+			]
+		},
+		"dAppFiles/ERC20.sol": {
+			"keccak256": "0xcb70a92dc44198bf7bae2daf3a459ac9658bfd9a203cdb0821069dbddbc372f5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5c3975015beefb73877903e2907409ee769ab04a64141138e093fa0f06f384a9",
+				"dweb:/ipfs/QmREeRDRCjxXgMKC21EdUtcSz65DpthcAjjyMpFR5kAtyV"
+			]
+		},
+		"dAppFiles/EtherPriceOracleConstant.sol": {
+			"keccak256": "0x4dd5d4a76b3252e66024b0d1588f683addfb3cae3b9392cacaf35c73eeb3fe82",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://04a230f9d1399da0d7b878c97aeec79503e017f17e83d85c6c6c9aea61633465",
+				"dweb:/ipfs/QmRJHAAcqoGeYKCMT3B5fqLgko9TaJNnT8mkYRiwSFnzMM"
+			]
+		},
+		"dAppFiles/IDEX.sol": {
+			"keccak256": "0x09c6b39e5d23db4a124a1739f39607a92768f91a532a5467a520c085663a9ccf",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://0b0854fab8558f4cf18c27287449bcff0194c7c69b77cd98f7edeb47d0203ffe",
+				"dweb:/ipfs/QmatyQvRQ7TdrgH3u1o3jTXWKP5HiMVrYgA8LFaVcP1YxD"
+			]
+		},
+		"dAppFiles/IERC165.sol": {
+			"keccak256": "0xc859863e3bda7ec3cddf6dafe2ffe91bcbe648d1395b856b839c32ee9617c44c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a9d5417888b873cf2225ed5d50b2a67be97c1504134a2a580512168d587ad82e",
+				"dweb:/ipfs/QmNr5fTb2heFW658NZn7dDnofZgFvQTnNxKRJ3wdnR1skX"
+			]
+		},
+		"dAppFiles/IERC20.sol": {
+			"keccak256": "0xee2337af2dc162a973b4be6d3f7c16f06298259e0af48c5470d2839bfa8a22f4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://30c476b4b2f405c1bb3f0bae15b006d129c80f1bfd9d0f2038160a3bb9745009",
+				"dweb:/ipfs/Qmb3VcuDufv6xbHeVgksC4tHpc5gKYVqBEwjEXW72XzSvN"
+			]
+		},
+		"dAppFiles/IERC20Metadata.sol": {
+			"keccak256": "0xca4984fc531528047614e3e13820702a7719ed5221c8362d5b83207a1624d313",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0bcd4ff43608255d66dc5536e225ecfca21a7d0b243e8eba6c7ac083e8b1c117",
+				"dweb:/ipfs/Qmag9KhKnWVQQhJhXTRMKKox7GXsyUT32F7gN5VbiSZzTn"
+			]
+		},
+		"dAppFiles/IERC20Receiver.sol": {
+			"keccak256": "0xcc0a05953dcdbfa49d0488377375f69be990da97b628478e54ac11d4865be74a",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://a73397b7bb3084096f4d1ac35db8c073df59caa07c124a9f5cbad4c26815ccb1",
+				"dweb:/ipfs/Qmbe4wggYjkjFeR7AEgrpYio5GdXKqBVBRRjpLZ4sVwb2d"
+			]
+		},
+		"dAppFiles/IEtherPriceOracle.sol": {
+			"keccak256": "0x074e8b529e79c5aadcd35a58ac9b61b167698d3d6eb552544e7ac2a5ee942a69",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://52890b5d4628406cba723d8b9d74d0cd7538a4918ececf77aabffb61458c7e67",
+				"dweb:/ipfs/QmZ5hRrZHzWgwCKS1snAuhqxoSB7K9wHnxo9XvtKYdekSA"
+			]
+		},
+		"dAppFiles/ITokenCC.sol": {
+			"keccak256": "0xfaae0b8e2a4166fb92a7610e6d3dd73de8f68713c11df37afa87bc6eb539c5bd",
+			"license": "GPL-3.0-or-later",
+			"urls": [
+				"bzz-raw://1cca9a4eb7f4c83b81c066a11914949da152ba05172caf45fc174dc2e1b66ff2",
+				"dweb:/ipfs/QmUCeiTjkKbDbB1LuErjuuv5TqYXHoAvJX1F8BDrj5M7qF"
+			]
+		},
+		"dAppFiles/TokenCC.sol": {
+			"keccak256": "0xcfbad6395a61b579446d6c64cb750f1e6bef39743c497e982e72aa098c09413e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4d6c7c17c0afce8bcc3059e0115250e65b98f3453756934728a616c3b950dd34",
+				"dweb:/ipfs/QmPTiTPkE5AffJiQVnvC2n53tRoaiLcDyeDdkrXpNW6B1c"
+			]
+		},
+		"dAppFiles/draft-IERC6093.sol": {
+			"keccak256": "0x9cac1f97ecc92043dd19235d6677e40cf6bac382886a94f7a80a957846b24229",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a1e0c924e0edfdfd4abceeb552d99f1cd95c0d387b38ccb1f67c583607e3d155",
+				"dweb:/ipfs/QmZAi6qKa66zuS3jyEhsQR9bBNnZe1wSognYqw9nvseyUz"
+			]
+		}
+	},
+	"version": 1
+}
